@@ -1,0 +1,10 @@
+# build files
+*.bat
+# compiled executables
+*.exe
+# object files left over from compilation
+*.obj
+obj/
+
+# brainf*** code
+*.bf
