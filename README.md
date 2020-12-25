@@ -7,6 +7,8 @@ A just-in-time [brainf***](https://en.wikipedia.org/wiki/Brainfuck) compiler for
 
 The executable takes an input file path as a command line argument, and executes that file, providing some extra diagnostic information (a hex dump of the first 256 memory cells).
 
+Currently this JIT compiler only supports the +, -, <, >, and . instructions. The loop and input instructions will be added soon!
+
 ### Details
 
 The tape is 30000 cells long, and each cell is a single byte. The tape is not bounds-checked, so the head can overflow the tape and write to unknown memory without causing an error.
