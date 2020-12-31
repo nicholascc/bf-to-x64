@@ -48,8 +48,14 @@ int main(int argc, char *argv[]) {
   if(argc < 2) {
     printf("You must provide a .bf file to execute.\n");
     exit(EXIT_FAILURE);
-  } else if(argc > 2) {
+  } else if(argc > 3) {
     printf("Too many arguments provided.\n");
+    exit(EXIT_FAILURE);
+  }
+  bool verbose = argc == 3;
+
+  if(verbose && strcmp(argv[2], "-v")) {
+    printf("Did not recognize second argument '%s'\n.", argv[2]);
     exit(EXIT_FAILURE);
   }
 
@@ -66,28 +72,32 @@ int main(int argc, char *argv[]) {
   push_bf(&program, f, tape);
   assert(fclose(f) == 0 && "file close failed");
 
-  printf("Generated x64 code:\n");
+  if(verbose) {
+    printf("Generated x64 code:\n");
 
-  for(int i = 0; i < program.length; i++) {
-    if(i%8 == 0) {
-      printf("\n");
+    for(int i = 0; i < program.length; i++) {
+      if(i%8 == 0) {
+        printf("\n");
+      }
+      printf("%02X ", program.data[i]);
     }
-    printf("%02X ", program.data[i]);
   }
 
   printf("\n\nExecuting '%s'...\n\n", path);
 
   u64 returned = dispatch(program);
 
-  printf("\n\nEnded at head position: %llu\n", returned);
+  if(verbose) {
+    printf("\n\nEnded at head position: %llu\n", returned);
 
-  printf("First 64 memory cells at end of execution:\n");
+    printf("First 64 memory cells at end of execution:\n");
 
-  for(int i = 0; i < 64; i++) {
-    if(i%8 == 0) {
-      printf("\n");
+    for(int i = 0; i < 64; i++) {
+      if(i%8 == 0) {
+        printf("\n");
+      }
+      printf("%02X ", tape[i]);
     }
-    printf("%02X ", tape[i]);
+    printf("\n");
   }
-  printf("\n");
 }
