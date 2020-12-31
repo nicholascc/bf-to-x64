@@ -2,7 +2,7 @@
 #define INSTRUCTION_ENCODING_H
 
 
-#include "byte_array.h"
+#include "dynamic_array.h"
 #include "types.h"
 #include "stdbool.h"
 
@@ -33,6 +33,13 @@ void push_pop_r64 (Byte_Array *program, r32_index op);
 
 void push_call_r64(Byte_Array *program, r32_index op);
 void push_ret(Byte_Array *program);
+
+void push_cmp_mem8_r_plus_r_imm8(Byte_Array *program, r32_index addend1, r32_index addend2, u8 op);
+
+const u64 SIZE_OF_JE_REL32;
+void push_je_rel32 (Byte_Array *program, i32 relative_offset);
+const u64 SIZE_OF_JNE_REL32;
+void push_jne_rel32(Byte_Array *program, i32 relative_offset);
 
 
 #endif /* end of include guard: INSTRUCTION_ENCODING_H */

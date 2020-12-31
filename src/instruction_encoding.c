@@ -1,5 +1,5 @@
 #include "instruction_encoding.h"
-#include "byte_array.h"
+#include "dynamic_array.h"
 #include "stdbool.h"
 
 void push_rex(Byte_Array *program, bool w, bool r, bool x, bool b) {
@@ -92,6 +92,8 @@ void push_pop_r64(Byte_Array *program, r32_index op) {
   byte_array_push(program, 0x58 + op);
 }
 
+
+
 void push_call_r64(Byte_Array *program, r32_index op) {
   byte_array_push(program, 0xff);
   push_mod_rm(program, 0b11, op, 2);
@@ -99,4 +101,28 @@ void push_call_r64(Byte_Array *program, r32_index op) {
 
 void push_ret(Byte_Array *program) {
   byte_array_push(program, 0xc3);
+}
+
+
+// cmp [r64+r64], imm8
+void push_cmp_mem8_r_plus_r_imm8(Byte_Array *program, r32_index addend1, r32_index addend2, u8 op) {
+  byte_array_push(program, 0x80);
+  push_mod_rm(program, 0b00, 0b100, 7);
+  push_sib(program, 0b00, addend1, addend2);
+  byte_array_push(program, op);
+}
+
+
+const u64 SIZE_OF_JE_REL32 = 6;
+void push_je_rel32(Byte_Array *program, i32 relative_offset) {
+  byte_array_push(program, 0x0f);
+  byte_array_push(program, 0x84);
+  push_dword(program, relative_offset);
+}
+
+const u64 SIZE_OF_JNE_REL32 = 6;
+void push_jne_rel32(Byte_Array *program, i32 relative_offset) {
+  byte_array_push(program, 0x0f);
+  byte_array_push(program, 0x85);
+  push_dword(program, relative_offset);
 }

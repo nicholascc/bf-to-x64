@@ -7,7 +7,7 @@
 #include <stdio.h>
 
 #include "types.h"
-#include "byte_array.h"
+#include "dynamic_array.h"
 #include "instruction_encoding.h"
 #include "bf_to_x64.h"
 
@@ -61,16 +61,27 @@ int main(int argc, char *argv[]) {
     exit(EXIT_FAILURE);
   }
 
-  Byte_Array program = initialize_byte_array(2);
+  Byte_Array program = initialize_byte_array(1);
 
   push_bf(&program, f, tape);
   assert(fclose(f) == 0 && "file close failed");
 
-  printf("Executing '%s'...\n\n", path);
+  printf("Generated x64 code:\n");
+
+  for(int i = 0; i < program.length; i++) {
+    if(i%8 == 0) {
+      printf("\n");
+    }
+    printf("%02X ", program.data[i]);
+  }
+
+  printf("\n\nExecuting '%s'...\n\n", path);
 
   u64 returned = dispatch(program);
 
   printf("\n\nEnded at head position: %llu\n", returned);
+
+  printf("First 64 memory cells at end of execution:\n");
 
   for(int i = 0; i < 64; i++) {
     if(i%8 == 0) {
