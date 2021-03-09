@@ -9,7 +9,7 @@ The executable takes an input file path as a command line argument, and executes
 
 Try out the examples in the `examples\` directory, such as `examples\mandelbrot.bf` which prints out an ASCII representation of the Mandelbrot set!
 
-Currently this JIT compiler does not support the ',' (input) instruction, and does not perform any optimizations on the input (e.g. folding long strings of `inc`s into a single `add`).
+Currently this JIT compiler does not support the ',' (input) instruction, and does not perform any optimizations on the input (e.g. folding long strings of increments into a single addition).
 
 ### Details
 
