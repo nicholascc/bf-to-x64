@@ -17,6 +17,8 @@ The tape is 30000 cells long, and each cell is a single byte. The tape is not bo
 
 Code generation (done in `bf_to_x64.c`) uses functions specified in `instruction_encoding.c`, which exposes an assembly-language-like interface. `main.c` uses `bf_to_x64.c` to generate the assembly code and calls it as a function (no run-time optimization is done on the generated machine language).
 
+Currently, this program has no error handling, so its behavior is undefined on invalid inputs.
+
 ### Compiling
 
 Compilation has only been tested using the Microsoft C compiler (MSVC).
