@@ -30,7 +30,7 @@ void push_bf(Byte_Array *program, FILE *file, u8 *tape_ptr) {
   push_mov_r64_imm64(program, EDX, (u64)(&print_char));
 
 
-
+  // the last element of this stack is the index of the last open brace; used for the jumping that the braces require
   Dword_Array open_brace_index_stack = initialize_dword_array(1);
 
   char c = fgetc(file);
