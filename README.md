@@ -1,7 +1,7 @@
 # Brainf*** to x64
 A just-in-time [brainf***](https://en.wikipedia.org/wiki/Brainfuck) compiler for Windows [x86-64](https://en.wikipedia.org/wiki/X86-64).
 
-###### Note: this program will *only* work on x86-64 Windows machines.
+###### Note: this program will *only* work on x86-64 Windows machines. Built from scratch in C with no dependencies!
 
 ### Usage
 
